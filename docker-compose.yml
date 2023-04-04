@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+    image: contacts-importer/web:latest
+    command: bundle exec foreman start -f Procfile.dev
+    tty: true
+    ports:
+      - 3000:3000
+      - 3035:3035
+    volumes:
+      - .:/app
+    env_file:
+      - .env.development
+      - .env.development.local
+    environment:
+      - ACTION_MAILER_HOST=mailhog
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:9.5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  
+  redis:
+    image: redis:4.0.14-alpine
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - 1025:1025
+      - 8025:8025
+      
+  haproxy:
+    build: ./docker/haproxy
+    image: contacts-importer/haproxy/dev:latest
+    ports:
+      - 80:80
+    depends_on:
+      - app
+      - mailhog
+
+volumes:
+  postgres-data:
+  redis-data:
