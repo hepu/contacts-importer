@@ -6,12 +6,12 @@
     <ul class="dropdown-menu <%= defined?(mobile) && mobile ? '' : 'dropdown-menu-end' %>">
       <li>
         <%= link_to session_path(current_user), class: "dropdown-item" do %>
-          Mi cuenta
+          My account
         <% end %>
       </li>
       <li>
         <%= link_to destroy_user_session_path, class: 'dropdown-item', method: :delete do %>
-          <strong>Cerrar Sesión</strong>
+          <span class="text-danger">Log out</span>
         <% end %>
       </li>
     </ul>
@@ -19,7 +19,7 @@
 <% else %>
   <li class="nav-item">
     <%= link_to new_user_session_path, class: 'nav-link', aria: {current: 'page'} do %>
-      Iniciar Sesión
+      Log In
     <% end %>
   </li>
 <% end %>

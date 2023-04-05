@@ -1,0 +1,5 @@
+<tr>
+  <td><%= link_to import.id, import_path(import) %></td>
+  <td><%= link_to import.current_status, import_path(import) %></td>
+  <td><%= link_to import.created_at.strftime('%Y/%m/%d'), import_path(import) %></td>
+</tr>

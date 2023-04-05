@@ -1,5 +1,10 @@
 <li class="nav-item">
-  <%= link_to root_path, class: "nav-link #{active_text(:contacts, :index)}", aria: {current: 'page'} do %>
+  <%= link_to root_path, class: "nav-link #{active_text(:contacts)}", aria: {current: 'page'} do %>
     Contacts
+  <% end %>
+</li>
+<li class="nav-item">
+  <%= link_to imports_path, class: "nav-link #{active_text(:imports)}", aria: {current: 'page'} do %>
+    Imports
   <% end %>
 </li>

@@ -1,0 +1,26 @@
+<h1>Imports</h1>
+<div class="d-flex justify-content-end mt-3">
+  <%= link_to new_import_path, class: 'btn btn-primary' do %>
+    <i class="fa-solid fa-upload"></i> Upload file
+  <% end %>
+</div>
+<div class="table-responsive mt-3">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Status</th>
+        <th scope="col">Uploaded on</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @imports.empty? %>
+        <tr>
+          <td colspan="4" class="text-muted text-center">No imports found</td>
+        </tr>
+      <% else %>
+        <%= render @imports %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -2,12 +2,7 @@ class ContactsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-  end
-
-  def new
-  end
-
-  def create
+    @contacts = current_user.contacts
   end
 
   def show
