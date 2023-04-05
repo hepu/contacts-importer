@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_05_025541) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_05_033247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_025541) do
     t.string "current_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "columns_pair"
     t.index ["current_status"], name: "index_imports_on_current_status"
     t.index ["user_id"], name: "index_imports_on_user_id"
   end

@@ -1,6 +1,8 @@
 class Contact < ApplicationRecord
   belongs_to :user
   belongs_to :import
+  
+  UPLOADABLE_ATTRIBUTES = %w[address birthdate credit_card_number email name phone].freeze
 end
 
 # == Schema Information

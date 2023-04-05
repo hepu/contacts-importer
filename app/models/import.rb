@@ -18,6 +18,7 @@ end
 # Table name: imports
 #
 #  id             :bigint           not null, primary key
+#  columns_pair   :jsonb
 #  current_status :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
