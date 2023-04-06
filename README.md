@@ -32,8 +32,13 @@ This app makes use of **ActiveRecord Encryption**, so it's necessary to have a `
 
 #### Standalone
 
+- You can use `foreman`: `foreman start -f Procfile.dev`
+
+Or:
+
 - To run the web server, run: `rails s`
 - To run the mail server, run the following on another tab: `mailhog`
+- To run sidekiq, execute: `sidekiq`
 
 ### Running tests
 
