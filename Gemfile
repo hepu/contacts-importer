@@ -82,3 +82,5 @@ gem 'rubocop', require: false
 gem "bootstrap", "~> 5.2"
 
 gem "activemerchant", "~> 1.126", require: false
+
+gem "kaminari", "~> 1.2"

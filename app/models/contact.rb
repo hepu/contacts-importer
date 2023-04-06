@@ -16,6 +16,8 @@ class Contact < ApplicationRecord
   validates :address, presence: true
   validates :phone, format: { with: PHONE_REGEXP }
   validates :name, presence: true, format: { with: NAME_REGEXP }
+  
+  paginates_per 50
 end
 
 # == Schema Information

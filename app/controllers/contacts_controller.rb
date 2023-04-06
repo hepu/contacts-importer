@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @contacts = current_user.contacts.order(name: :asc)
+    @contacts = current_user.contacts.order(name: :asc).page(params[:page]).per(params[:per_page])
   end
 
   def show

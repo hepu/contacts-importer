@@ -19,3 +19,27 @@
 input:invalid {
   border-color: #dc3545 !important;
 }
+
+.pagination {
+  justify-content: center;
+  margin-bottom: 2rem;
+  
+  .page {
+    margin: 0 0.5rem;
+  }
+  
+  .first {
+    margin-right: 0.5rem;
+  }
+  
+  .previous {
+    margin-right: 0.5rem;
+  }
+  
+  .next {
+    margin-left: 0.5rem;
+  }
+  .last {
+    margin-left: 0.5rem;
+  }
+}

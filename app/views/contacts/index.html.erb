@@ -28,3 +28,11 @@
     </tbody>
   </table>
 </div>
+<% if @contacts.total_count > 0 %>
+  <div class="mb-2 row">
+    <div class="col text-center text-muted">
+      Total contacts: <%= @contacts.total_count %>
+    </div>
+  </div>
+<% end %>
+<%= paginate @contacts %>
