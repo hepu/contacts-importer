@@ -47,6 +47,6 @@ Ruby on Rails app that allows the user to sign up and upload CSV files that impo
 
 #### CSVs to upload
 
-- example_happy_path.csv
-- example_weird_headers.csv
-- example_wrong_fields.csv
+- [example_happy_path.csv](https://github.com/hepu/contacts-importer/blob/main/example_happy_path.csv): Case when all contacts are imported successfully (if it's the first time)
+- [example_weird_headers.csv](https://github.com/hepu/contacts-importer/blob/main/example_weird_headers.csv): Case when CSV has weird headers to pair to
+- [example_wrong_fields.csv](https://github.com/hepu/contacts-importer/blob/main/example_wrong_fields.csv): Case when the fields entered in the CSVs have format issues
