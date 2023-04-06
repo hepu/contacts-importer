@@ -51,6 +51,11 @@ GEM
     activejob (7.0.4.3)
       activesupport (= 7.0.4.3)
       globalid (>= 0.3.6)
+    activemerchant (1.126.0)
+      activesupport (>= 4.2)
+      builder (>= 2.1.2, < 4.0.0)
+      i18n (>= 0.6.9)
+      nokogiri (~> 1.4)
     activemodel (7.0.4.3)
       activesupport (= 7.0.4.3)
     activerecord (7.0.4.3)
@@ -276,7 +281,9 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 5.5)
+  activemerchant (~> 1.126)
   annotate (~> 3.2)
+  bcrypt (~> 3.1.7)
   bootsnap
   bootstrap (~> 5.2)
   capybara

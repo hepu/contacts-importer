@@ -4,3 +4,27 @@
     <i class="fa-solid fa-upload"></i> Import contacts
   <% end %>
 </div>
+<div class="table">
+  <table class='table table-striped'>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Date of Birth</th>
+        <th>Last 4</th>
+        <th>Email</th>
+        <th>Phone number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @contacts.empty? %>
+        <tr>
+          <td colspan="4" class="text-muted text-center">No contacts found</td>
+        </tr>
+      <% else %>
+        <%= render @contacts %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

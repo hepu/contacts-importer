@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @contacts = current_user.contacts
+    @contacts = current_user.contacts.order(name: :asc)
   end
 
   def show

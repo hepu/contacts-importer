@@ -1,6 +1,6 @@
 class ImportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_import!, only: %i[show pair_columns update]
+  before_action :find_import!, only: %i[show pair_columns update destroy]
 
   def index
     @imports = current_user.imports
@@ -16,7 +16,7 @@ class ImportsController < ApplicationController
     @import.save!
 
     flash[:success] = "Import created successfully!"
-    redirect_to pair_columns_import_path(@import)
+    redirect_to pair_columns_import_path(@import, continue: true)
   rescue StandardError => e
     flash[:error] = "Error: #{e.message}"
     redirect_to action: :new
@@ -24,21 +24,34 @@ class ImportsController < ApplicationController
   
   def pair_columns
     @csv_headers = CsvHeadersForFileService.new(@import.file).call
-    @contact_attributes = Contact::UPLOADABLE_ATTRIBUTES
+    @contact_attributes = Import::UPLOADABLE_ATTRIBUTES.sort
+    @continue = params[:continue].present?
   end
   
-  def show
-    
-  end
+  def show; end
   
   def update
     @import.update!(update_params)
+    
+    if params[:schedule_job].present?
+      ImportContactsJob.perform_later(@import.id, current_user.id)
+      flash[:success] = "Contacts are now being imported!"
+    else
+      flash[:success] = "Columns paired successfully!"
+    end
 
-    flash[:success] = "Columns paired successfully!"
     redirect_to import_path(@import)
   rescue StandardError => e
     flash[:error] = "Error: #{e.message}"
-    redirect_to action: :pair_columns
+    redirect_to action: :pair_columns, continue: params[:schedule_job].present?
+  end
+  
+  def destroy
+    @import.destroy!
+    flash[:success] = "Import deleted successfully"
+  rescue StandardError => e
+    flash[:error] = "Error: #{e.message}"
+    redirect_to action: :index
   end
   
   private

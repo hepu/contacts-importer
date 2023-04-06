@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_05_033247) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_05_161620) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,13 +47,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_033247) do
     t.integer "import_id"
     t.string "name"
     t.string "email"
-    t.datetime "birthdate"
+    t.string "birthdate"
     t.string "phone"
     t.string "address"
     t.string "credit_card_number"
     t.string "credit_card_network"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "last_4"
     t.index ["import_id"], name: "index_contacts_on_import_id"
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end

@@ -1,7 +1,11 @@
+<%= render partial: 'shared/breadcrumbs', locals: { items: [link_to('Imports', imports_path), @import.id] } %>
 <h1>Import</h1>
 <div class="d-flex justify-content-end mt-3">
   <%= link_to pair_columns_import_path(@import), class: 'btn btn-primary' do %>
-    <i class="fa-solid fa-upload"></i> Pair columns
+    <i class="fa-solid fa-arrows-left-right-to-line"></i> Pair columns
+  <% end %>
+  <%= button_to @import, class: 'btn btn-danger', method: :delete, form: { data: { turbo: false, confirm: 'Are you sure?' } } do %>
+    Delete
   <% end %>
 </div>
 <div class="row mt-3">

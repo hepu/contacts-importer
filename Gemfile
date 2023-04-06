@@ -80,3 +80,5 @@ gem "aasm", "~> 5.5"
 gem 'rubocop', require: false
 
 gem "bootstrap", "~> 5.2"
+
+gem "activemerchant", "~> 1.126", require: false

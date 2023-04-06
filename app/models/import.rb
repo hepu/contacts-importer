@@ -1,5 +1,7 @@
 class Import < ApplicationRecord
   include AASM
+  
+  UPLOADABLE_ATTRIBUTES = %w[address birthdate credit_card_number email name phone].freeze
 
   has_one_attached :file
   belongs_to :user
@@ -10,6 +12,18 @@ class Import < ApplicationRecord
     state :processing
     state :failed
     state :finished
+    
+    event :start_process do
+      transitions from: :on_hold, to: :processing
+    end
+    
+    event :fail do
+      transitions from: :processing, to: :failed
+    end
+    
+    event :finish do
+      transitions from: :processing, to: :finished
+    end
   end
 end
 

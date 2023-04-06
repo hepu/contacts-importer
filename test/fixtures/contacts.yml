@@ -4,10 +4,11 @@
 #
 #  id                  :bigint           not null, primary key
 #  address             :string
-#  birthdate           :datetime
+#  birthdate           :string
 #  credit_card_network :string
 #  credit_card_number  :string
 #  email               :string
+#  last_4              :string
 #  name                :string
 #  phone               :string
 #  created_at          :datetime         not null

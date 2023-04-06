@@ -6,7 +6,7 @@ class CsvHeadersForFileService
   def call
     require 'csv'
 
-    csv = CSV.parse(@file.download, :headers => true)
+    csv = CSV.parse(@file.download, headers: true, encoding: 'UTF-8')
     
     csv.headers
   end

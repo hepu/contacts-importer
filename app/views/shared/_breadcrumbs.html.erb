@@ -1,0 +1,10 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <% items.each_with_index do |item, index| %>
+      <% is_last = index == items.count - 1 %>
+      <li class="breadcrumb-item <%= is_last ? 'active' : '' %>" <%= is_last ? 'aria-current="page"' : '' %>>
+        <%= item %>
+      </li>
+    <% end %>
+  </ol>
+</nav>
