@@ -18,8 +18,9 @@
 #
 # Indexes
 #
-#  index_contacts_on_import_id  (import_id)
-#  index_contacts_on_user_id    (user_id)
+#  index_contacts_on_email_and_user_id  (email,user_id) UNIQUE
+#  index_contacts_on_import_id          (import_id)
+#  index_contacts_on_user_id            (user_id)
 #
 
 one:

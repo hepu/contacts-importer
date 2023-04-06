@@ -12,7 +12,7 @@ class Contact < ApplicationRecord
   validates :credit_card_network, presence: true
   validates :last_4, presence: true, length: { is: 4 }
   validates :birthdate, presence: true, format: { with: BIRTHDATE_REGEXP }
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { scope: :user_id }
   validates :address, presence: true
   validates :phone, format: { with: PHONE_REGEXP }
   validates :name, presence: true, format: { with: NAME_REGEXP }
@@ -40,6 +40,7 @@ end
 #
 # Indexes
 #
-#  index_contacts_on_import_id  (import_id)
-#  index_contacts_on_user_id    (user_id)
+#  index_contacts_on_email_and_user_id  (email,user_id) UNIQUE
+#  index_contacts_on_import_id          (import_id)
+#  index_contacts_on_user_id            (user_id)
 #

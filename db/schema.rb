@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_05_161620) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_06_011307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_161620) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "last_4"
+    t.index ["email", "user_id"], name: "index_contacts_on_email_and_user_id", unique: true
     t.index ["import_id"], name: "index_contacts_on_import_id"
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end
