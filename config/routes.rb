@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "contacts#index"
   
-  resources :contacts, except: %i[new create]
+  resources :contacts, only: %i[index show destroy]
   resources :imports, only: %i[index new create show update destroy] do
     member do
       get :pair_columns

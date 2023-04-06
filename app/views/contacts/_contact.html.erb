@@ -6,4 +6,9 @@
   <td><%= contact.last_4 %></td>
   <td><%= contact.email %></td>
   <td><%= contact.phone %></td>
+  <td>
+    <%= button_to contact, class: 'btn btn-sm btn-danger', method: :delete, form: { data: { turbo: false, confirm: 'Are you sure?' } } do %>
+      Delete
+    <% end %>
+  </td>
 </tr>

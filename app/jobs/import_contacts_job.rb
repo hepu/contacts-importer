@@ -6,12 +6,13 @@ class ImportContactsJob < ApplicationJob
     require 'active_merchant'
 
     @import = Import.find_by!(id: import_id)
-    @import.start_process!
+    @import.start_process! if @import.may_start_process?
 
     csv = CSV.parse(@import.file.download, headers: true, encoding: 'UTF-8')
     column_pairing = @import.columns_pair
     success_contacts = []
     failed_contacts = []
+    @import.log['logs'] ||= []
     
     csv.each_with_index do |row, index|
       cc_number = row[column_pairing['credit_card_number']]
@@ -30,19 +31,30 @@ class ImportContactsJob < ApplicationJob
         import_id: import_id
       )
       if new_contact.save
+        @import.log['logs'] << {
+          index_in_file: index,
+          error: false,
+          contact_info: row
+        }
         success_contacts << new_contact
         Rails.logger.info("[ImportContactsJob] Contact imported! ID: #{new_contact.id}")
       else
+        @import.log['logs'] << {
+          index_in_file: index,
+          error: true,
+          contact_info: row,
+          description: new_contact.errors.full_messages.to_sentence
+        }
         failed_contacts << new_contact
         Rails.logger.error("[ImportContactsJob] Contact import failed! Index: #{index}")
         Rails.logger.error("[ImportContactsJob] #{new_contact.errors.full_messages}")
       end
     end
     
-    if failed_contacts.empty?
-      @import.finish!
+    if failed_contacts.any? && success_contacts.empty?
+      @import.fail! if @import.may_fail?
     else
-      @import.fail!
+      @import.finish! if @import.may_finish?
     end
   end
 end

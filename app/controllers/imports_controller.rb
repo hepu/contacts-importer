@@ -3,7 +3,7 @@ class ImportsController < ApplicationController
   before_action :find_import!, only: %i[show pair_columns update destroy]
 
   def index
-    @imports = current_user.imports
+    @imports = current_user.imports.order(created_at: :desc)
   end
 
   def new
