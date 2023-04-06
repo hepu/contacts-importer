@@ -3,7 +3,7 @@ class ImportsController < ApplicationController
   before_action :find_import!, only: %i[show pair_columns update destroy]
 
   def index
-    @imports = current_user.imports.order(created_at: :desc)
+    @imports = current_user.imports.order(created_at: :desc).page(params[:page]).per(params[:per_page])
   end
 
   def new
@@ -48,10 +48,12 @@ class ImportsController < ApplicationController
   
   def destroy
     @import.destroy!
+
     flash[:success] = "Import deleted successfully"
+    redirect_to action: :index
   rescue StandardError => e
     flash[:error] = "Error: #{e.message}"
-    redirect_to action: :index
+    redirect_to @import
   end
   
   private

@@ -24,3 +24,11 @@
     </tbody>
   </table>
 </div>
+<% if @imports.total_count > 0 %>
+  <div class="mb-2 row">
+    <div class="col text-center text-muted">
+      Total imports: <%= @imports.total_count %>
+    </div>
+  </div>
+<% end %>
+<%= paginate @imports %>

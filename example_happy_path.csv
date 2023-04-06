@@ -1,3 +1,5 @@
 name,address,email,birthdate,credit_card_number,phone
 Tester 1,Tester Av.,one@test.com,2020/01/01,5406910151019999,(+57) 300 365 87 42
-Tester 2,Tester Av. 2,two@test.com,2018/01/01,5406910151019999,(+1) 300 365 87 42
+Tester 2,Tester Av. 2,two@test.com,2018-01-01,5406910151019999,(+1) 300 365 87 42
+Tester 11,Tester Av. 11,eleven@test.com,2018-01-01,4111111111111111,(+977) 300 365 87 42
+Tester 22,Tester Av. 22,twentytwo@test.com,2018-01-01,371449635398431,(+1) 300 365 87 42

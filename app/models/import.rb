@@ -7,6 +7,8 @@ class Import < ApplicationRecord
   belongs_to :user
   has_many :contacts
   
+  paginates_per 50
+  
   aasm column: :current_status do
     state :on_hold, initial: true
     state :processing
@@ -14,7 +16,7 @@ class Import < ApplicationRecord
     state :finished
     
     event :start_process do
-      transitions from: :on_hold, to: :processing
+      transitions to: :processing
     end
     
     event :fail do

@@ -1,5 +1,5 @@
 class Contact < ApplicationRecord
-  PHONE_REGEXP = /\A\(\+\d{1}|\d{2}\)\s\d{3}(\S|\s)\d{3}(\S|\s)\d{2}(\S|\s)\d{2}((\S|\s)\d{2})?\z/
+  PHONE_REGEXP = /\A\(\+\d{1,}\)\s\d{3}(\S|\s)\d{3}(\S|\s)\d{2}(\S|\s)\d{2}((\S|\s)\d{2})?\z/
   NAME_REGEXP = /\A([a-zA-Z0-9]+(\s|\-)*)*\z/
   BIRTHDATE_REGEXP = /\A\d{4}\/\d{2}\/\d{2}\z|\A\d{4}\-\d{2}\-\d{2}\z/
 
