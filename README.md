@@ -1,6 +1,8 @@
 # Contacts Importer
 
-Ruby on Rails app that allows the user to sign up and upload CSV files that import contacts
+Ruby on Rails app that allows the user to sign up and upload CSV files that import contacts.
+
+This app makes use of **ActiveRecord Encryption**, so it's necessary to have a `config/master.key` (provided externally)
 
 ## Getting Started
 
