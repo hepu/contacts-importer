@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :imports, only: %i[index new create show update destroy] do
     member do
       get :pair_columns
+      post :schedule_import
     end
   end
 end

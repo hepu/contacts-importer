@@ -88,3 +88,5 @@ gem "activemerchant", "~> 1.126", require: false
 gem "kaminari", "~> 1.2"
 
 gem "ffaker", "~> 2.21"
+
+gem "view_component", "~> 3.0"

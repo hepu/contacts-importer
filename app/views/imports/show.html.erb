@@ -1,8 +1,8 @@
 <%= render partial: 'shared/breadcrumbs', locals: { items: [link_to('Imports', imports_path), @import.id] } %>
 <h1>Import</h1>
 <div class="d-flex justify-content-end mt-3">
-  <%= link_to pair_columns_import_path(@import), class: 'btn btn-primary mx-2' do %>
-    <i class="fa-solid fa-arrows-left-right-to-line"></i> Pair columns
+  <%= link_to schedule_import_import_path(@import), class: 'btn btn-primary mx-2', method: :post do %>
+    Re-Import
   <% end %>
   <%= button_to @import, class: 'btn btn-danger', method: :delete, form: { data: { turbo: false, confirm: 'Are you sure?' } } do %>
     Delete
@@ -45,24 +45,9 @@
     <%= label_tag(:columns_pair, 'Columns pairing', class: 'form-label') %>
   </div>
   <div class="col-12 col-md-8">
-    <table class='table'>
-      <thead>
-        <tr>
-          <th>Attribute</th>
-          <th></th>
-          <th>CSV column</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @import.columns_pair&.each_key do |attribute| %>
-          <tr>
-            <td><%= attribute %></td>
-            <td>=></td>
-            <td><%= @import.columns_pair[attribute] %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= turbo_frame_tag "#{dom_id(@import)}_columns" do %>
+      <%= render 'columns', import: @import %>
+    <% end %>
   </div>
 </div>
 

@@ -6,6 +6,8 @@ class Import < ApplicationRecord
   has_one_attached :file
   belongs_to :user
   has_many :contacts
+
+  before_create :initialize_columns_pair
   
   paginates_per 50
   
@@ -14,6 +16,10 @@ class Import < ApplicationRecord
     state :processing
     state :failed
     state :finished
+
+    event :restart do
+      transitions to: :on_hold
+    end
     
     event :start_process do
       transitions to: :processing
@@ -26,6 +32,12 @@ class Import < ApplicationRecord
     event :finish do
       transitions from: :processing, to: :finished
     end
+  end
+
+  private
+
+  def initialize_columns_pair
+    self.columns_pair = UPLOADABLE_ATTRIBUTES.map { |attr| [attr, nil] }.to_h
   end
 end
 

@@ -1,0 +1,22 @@
+<%= form_with model: import, id: "#{dom_id(import)}_columns_form" do |f| %>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th></th>
+        <th>CSV column</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% import.columns_pair&.keys&.sort&.each do |attribute| %>
+        <tr>
+          <td><%= attribute %></td>
+          <td>=></td>
+          <td>
+            <%= select_tag "import[columns_pair][#{attribute}]", options_for_select(@csv_headers, import.columns_pair&.dig(attribute)), {include_blank: '-', class: 'form-select', onchange: 'this.form.requestSubmit()'} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

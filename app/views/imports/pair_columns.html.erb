@@ -1,6 +1,6 @@
 <%= render partial: 'shared/breadcrumbs', locals: { items: [link_to('Imports', imports_path), link_to(@import.id, import_path(@import)), 'Pair columns'] } %>
 <h1>Pair Columns</h1>
-<%= form_for @import do |f| %>
+<%= form_for @import, data: { turbo: false } do |f| %>
   <%= hidden_field_tag :schedule_job, @continue.present? %>
   <div class="mt-4">
     Please select the matching attribute for the columns obtained from the CSV
