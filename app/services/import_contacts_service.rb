@@ -35,10 +35,14 @@ class ImportContactsService
       end
     end
     
+    @import.save!
+    @import.notify_logs_change
     if failed_contacts.any? && success_contacts.empty?
-      @import.fail! if @import.may_fail?
+      Rails.logger.info("[ImportContactsJob] Import failed!")
+      @import.fail!
     else
-      @import.finish! if @import.may_finish?
+      Rails.logger.info("[ImportContactsJob] Import finished!")
+      @import.finish!
     end
   end
   

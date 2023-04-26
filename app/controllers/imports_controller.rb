@@ -1,6 +1,6 @@
 class ImportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_import!, only: %i[show pair_columns update destroy schedule_import]
+  before_action :find_import!, only: %i[show pair_columns update destroy schedule_import clear_logs]
 
   def index
     @imports = user_imports
@@ -68,11 +68,28 @@ class ImportsController < ApplicationController
   end
 
   def schedule_import
+    @import.restart!
     ImportContactsJob.perform_later(@import.id, current_user.id)
 
     respond_to do |format|
       format.html do
         flash[:success] = "Import scheduled to process!"
+        redirect_to import_path(@import)
+      end
+    end
+  rescue StandardError => e
+    flash[:error] = "Error: #{e.message}"
+    redirect_to import_path(@import)
+  end
+
+  def clear_logs
+    @import.clear_logs
+    @import.save!
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html do
+        flash[:success] = "Logs cleared!"
         redirect_to import_path(@import)
       end
     end

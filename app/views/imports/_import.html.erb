@@ -1,8 +1,9 @@
 <tr>
   <td><%= link_to import.id, import_path(import) %></td>
   <td>
-    <%= link_to import_path(import) do %>
-      <%= import_badge(import) %>
+    <%= turbo_stream_from import %>
+    <%= turbo_frame_tag "#{dom_id(import)}_status" do %>
+      <%= render 'status', import: import %>
     <% end %>
   </td>
   <td><%= link_to import.created_at.strftime('%Y/%m/%d'), import_path(import) %></td>

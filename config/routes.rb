@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     member do
       get :pair_columns
       post :schedule_import
+      delete :clear_logs
     end
   end
 end

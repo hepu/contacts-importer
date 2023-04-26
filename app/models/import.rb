@@ -17,21 +17,33 @@ class Import < ApplicationRecord
     state :failed
     state :finished
 
-    event :restart do
+    event :restart, after_commit: :notify_status_change do
       transitions to: :on_hold
     end
     
-    event :start_process do
+    event :start_process, after_commit: :notify_status_change do
       transitions to: :processing
     end
     
-    event :fail do
+    event :fail, after_commit: :notify_status_change do
       transitions from: :processing, to: :failed
     end
     
-    event :finish do
+    event :finish, after_commit: :notify_status_change do
       transitions from: :processing, to: :finished
     end
+  end
+
+  def notify_status_change
+    broadcast_update_later_to self, target: "import_#{id}_status", partial: 'imports/status'
+  end
+
+  def notify_logs_change
+    broadcast_update_later_to self, target: "import_#{id}_logs", partial: 'imports/logs'
+  end
+
+  def clear_logs
+    self.log['logs'] = []
   end
 
   private
