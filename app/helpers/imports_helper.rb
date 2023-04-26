@@ -5,10 +5,4 @@ module ImportsHelper
     return 'bg-warning' if import.processing?
     return 'bg-primary'
   end
-  
-  def import_badge(import)
-    content_tag(:span, class: "badge #{import_badge_color(import)}") do
-      t("statuses.#{import.current_status}")
-    end
-  end
 end
