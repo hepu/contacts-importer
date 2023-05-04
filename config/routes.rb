@@ -6,16 +6,16 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations',
     passwords: 'users/passwords',
-    confirmations: 'users/confirmations',
+    confirmations: 'users/confirmations'
   }
   root to: "contacts#index"
   
   resources :contacts, only: %i[index show destroy]
-  resources :imports, only: %i[index new create show update destroy] do
-    member do
-      get :pair_columns
-      post :schedule_import
-      delete :clear_logs
+  resources :imports do
+    scope module: :imports do
+      resource :pair_columns, only: :show
+      resource :schedules, only: :create
+      resource :clear_logs, only: :destroy
     end
   end
 end

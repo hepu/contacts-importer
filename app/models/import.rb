@@ -6,8 +6,10 @@ class Import < ApplicationRecord
   has_one_attached :file
   belongs_to :user
   has_many :contacts
+  has_many :column_pairings, dependent: :destroy
+  accepts_nested_attributes_for :column_pairings, allow_destroy: true
 
-  before_create :initialize_columns_pair
+  after_create :initialize_column_pairings
   
   paginates_per 50
   
@@ -48,8 +50,10 @@ class Import < ApplicationRecord
 
   private
 
-  def initialize_columns_pair
-    self.columns_pair = UPLOADABLE_ATTRIBUTES.map { |attr| [attr, nil] }.to_h
+  def initialize_column_pairings
+    return if self.column_pairings.any?
+
+    self.column_pairings = UPLOADABLE_ATTRIBUTES.map { |attr| self.column_pairings.find_or_create_by(local_column: attr) }
   end
 end
 
@@ -58,7 +62,6 @@ end
 # Table name: imports
 #
 #  id             :bigint           not null, primary key
-#  columns_pair   :jsonb
 #  current_status :string
 #  log            :jsonb
 #  created_at     :datetime         not null

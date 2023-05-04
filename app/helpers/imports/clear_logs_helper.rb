@@ -1,0 +1,2 @@
+module Imports::ClearLogsHelper
+end

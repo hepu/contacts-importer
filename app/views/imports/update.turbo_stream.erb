@@ -1,3 +1,12 @@
 <%= turbo_stream.replace "#{dom_id(@import)}_columns" do %>
-  <%= render 'columns', import: @import %>
+  <%= form_with model: @import, id: "#{dom_id(@import)}_columns_form" do |f| %>
+    <%= render 'columns', {
+      import: @import,
+      column_pairings: @column_pairings,
+      headers: @csv_headers,
+      onChange: 'this.form.requestSubmit()',
+      form: f,
+      sortable: true
+    } %>
+  <% end %>
 <% end %>

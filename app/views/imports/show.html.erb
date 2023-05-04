@@ -2,7 +2,7 @@
 <%= render partial: 'shared/breadcrumbs', locals: { items: [link_to('Imports', imports_path), @import.id] } %>
 <h1>Import</h1>
 <div class="d-flex justify-content-end mt-3">
-  <%= link_to schedule_import_import_path(@import), class: 'btn btn-primary mx-2', method: :post do %>
+  <%= link_to import_schedules_path(@import), class: 'btn btn-primary mx-2', method: :post do %>
     Re-Import
   <% end %>
   <%= button_to @import, class: 'btn btn-danger', method: :delete, form: { data: { turbo: false, confirm: 'Are you sure?' } } do %>
@@ -45,18 +45,28 @@
 </div>
 <div class="row mt-3">
   <div class="col-12 col-md-4 d-flex align-items-center">
-    <%= label_tag(:columns_pair, 'Columns pairing', class: 'form-label') %>
+    <%= label_tag(:column_pairings, 'Columns pairing', class: 'form-label') %>
   </div>
   <div class="col-12 col-md-8">
     <%= turbo_frame_tag "#{dom_id(@import)}_columns" do %>
-      <%= render 'columns', import: @import %>
+      <%= form_with model: @import, id: "#{dom_id(@import)}_columns_form" do |f| %>
+        <%=
+          render 'columns', {
+            import: @import,
+            column_pairings: @column_pairings,
+            headers: @csv_headers,
+            onChange: 'this.form.requestSubmit()',
+            form: f,
+            sortable: true
+          } %>
+      <% end %>
     <% end %>
   </div>
 </div>
 
 <h2 class="mt-4">Logs</h2>
 <div class="d-flex justify-content-end mt-3">
-  <%= button_to clear_logs_import_path(@import), class: 'btn btn-outline-danger', method: :delete, data: { turbo_method: :delete } do %>
+  <%= button_to import_clear_logs_path(@import), class: 'btn btn-outline-danger', method: :delete, data: { turbo_method: :delete } do %>
     Clear Logs
   <% end %>
 </div>

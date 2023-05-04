@@ -49,10 +49,19 @@ input:invalid {
   padding: 0;
 
   li {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem 0;
   }
 
-  li:nth-child(2n+2) {
+  &.striped-rows > li:nth-child(2n+2) {
     background-color: rgb(242, 241, 241);
+  }
+
+  .sortable-row {
+    cursor: move;
+  }
+
+  .clean-list > li {
+    height: 3em;
+    padding: 0.5rem 0.5rem;
   }
 }

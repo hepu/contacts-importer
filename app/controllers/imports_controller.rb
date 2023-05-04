@@ -1,6 +1,6 @@
 class ImportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_import!, only: %i[show pair_columns update destroy schedule_import clear_logs]
+  before_action :find_import!, only: %i[show update destroy]
 
   def index
     @imports = user_imports
@@ -16,21 +16,15 @@ class ImportsController < ApplicationController
     @import.save!
 
     flash[:success] = "Import created successfully!"
-    redirect_to pair_columns_import_path(@import, continue: true)
+    redirect_to import_pair_columns_path(@import)
   rescue StandardError => e
     flash[:error] = "Error: #{e.message}"
     redirect_to action: :new
   end
   
-  def pair_columns
-    @csv_headers = CsvHeadersForFileService.new(@import.file).call
-    @contact_attributes = Import::UPLOADABLE_ATTRIBUTES.sort
-    @continue = params[:continue].present?
-  end
-  
   def show
-    @csv_headers = CsvHeadersForFileService.new(@import.file).call
-    @contact_attributes = Import::UPLOADABLE_ATTRIBUTES.sort
+    load_column_pairings
+    load_csv_headers
   end
   
   def update
@@ -38,7 +32,8 @@ class ImportsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        @csv_headers = CsvHeadersForFileService.new(@import.file).call
+        load_column_pairings
+        load_csv_headers
       end
       format.html do
         if params[:schedule_job].present?
@@ -54,7 +49,7 @@ class ImportsController < ApplicationController
 
   rescue StandardError => e
     flash[:error] = "Error: #{e.message}"
-    redirect_to action: :pair_columns, continue: params[:schedule_job].present?
+    redirect_to @import
   end
   
   def destroy
@@ -66,37 +61,6 @@ class ImportsController < ApplicationController
     flash[:error] = "Error: #{e.message}"
     redirect_to @import
   end
-
-  def schedule_import
-    @import.restart!
-    ImportContactsJob.perform_later(@import.id, current_user.id)
-
-    respond_to do |format|
-      format.html do
-        flash[:success] = "Import scheduled to process!"
-        redirect_to import_path(@import)
-      end
-    end
-  rescue StandardError => e
-    flash[:error] = "Error: #{e.message}"
-    redirect_to import_path(@import)
-  end
-
-  def clear_logs
-    @import.clear_logs
-    @import.save!
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html do
-        flash[:success] = "Logs cleared!"
-        redirect_to import_path(@import)
-      end
-    end
-  rescue StandardError => e
-    flash[:error] = "Error: #{e.message}"
-    redirect_to import_path(@import)
-  end
   
   private
   
@@ -105,11 +69,13 @@ class ImportsController < ApplicationController
   end
   
   def update_params
-    params.require(:import).permit({columns_pair: %i[address birthdate credit_card_number email name phone]})
+    params.require(:import).permit({
+      column_pairings_attributes: %i[csv_column local_column position _destroy id]
+    })
   end
   
   def find_import!
-    @import = current_user.imports.find_by!(id: params[:id])
+    @import = current_user.imports.includes(:column_pairings).find_by!(id: params[:id])
   rescue StandardError => e
     flash[:error] = "Import not found"
     redirect_to action: :index
@@ -117,5 +83,16 @@ class ImportsController < ApplicationController
 
   def user_imports
     current_user.imports.order(created_at: :desc).page(params[:page]).per(params[:per_page])
+  end
+
+  def load_column_pairings
+    @column_pairings = @import.column_pairings.order(local_column: :asc)
+  end
+
+  def load_csv_headers
+    csv_file_headers = CsvHeadersForFileService.new(@import.file).call
+    current_csv_columns = @column_pairings.pluck(:csv_column)
+
+    @csv_headers = current_csv_columns.compact + csv_file_headers.reject { |h| current_csv_columns.include?(h) }
   end
 end
