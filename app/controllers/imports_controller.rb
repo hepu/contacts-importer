@@ -7,12 +7,11 @@ class ImportsController < ApplicationController
   end
 
   def new
-    @import = Import.new(user: current_user)
+    @import = current_user.imports.new
   end
   
   def create
-    @import = Import.new(create_params)
-    @import.user = current_user
+    @import = current_user.imports.new(create_params)
     @import.save!
 
     flash[:success] = "Import created successfully!"
