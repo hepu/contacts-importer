@@ -14,7 +14,7 @@
     <%= label_tag(:id, 'ID', class: 'form-label') %>
   </div>
   <div class="col-12 col-md-8">
-    <%= text_field_tag :id, @import.id, class: 'form-control', readonly: true %>
+    <%= text_field_tag :id, @import.id, class: 'form-control', readonly: true, disabled: true %>
   </div>
 </div>
 <div class="row mt-3">
@@ -32,7 +32,7 @@
     <%= label_tag(:file, 'Uploaded filename', class: 'form-label') %>
   </div>
   <div class="col-12 col-md-8">
-    <%= text_field_tag :file, @import.file.filename, class: 'form-control', readonly: true %>
+    <%= text_field_tag :file, @import.file.filename, class: 'form-control', readonly: true, disabled: true %>
   </div>
 </div>
 <div class="row mt-3">
@@ -40,7 +40,11 @@
     <%= label_tag(:created_at, 'Created on', class: 'form-label') %>
   </div>
   <div class="col-12 col-md-8">
-    <%= text_field_tag :created_at, @import.created_at.strftime('%Y/%m/%d'), class: 'form-control', readonly: true %>
+    <%= turbo_frame_tag "#{dom_id(@import)}_created_at" do %>
+      <%= form_with model: @import, id: "#{dom_id(@import)}_created_at_form" do |f| %>
+        <%= render 'created_at', import: @import, form: f %>
+      <% end %>
+    <% end %>
   </div>
 </div>
 <div class="row mt-3">

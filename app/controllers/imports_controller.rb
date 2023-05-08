@@ -68,7 +68,7 @@ class ImportsController < ApplicationController
   end
   
   def update_params
-    params.require(:import).permit({
+    params.require(:import).permit(:created_at, {
       column_pairings_attributes: %i[csv_column local_column position _destroy id]
     })
   end

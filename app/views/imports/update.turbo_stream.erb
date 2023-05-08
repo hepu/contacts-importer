@@ -10,3 +10,9 @@
     } %>
   <% end %>
 <% end %>
+
+<%= turbo_stream.replace "#{dom_id(@import)}_created_at" do %>
+  <%= form_with model: @import, id: "#{dom_id(@import)}_created_at_form" do |f| %>
+    <%= render 'created_at', import: @import, form: f %>
+  <% end %>
+<% end %>
