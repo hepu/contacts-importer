@@ -1,0 +1,21 @@
+<%= render partial: 'shared/breadcrumbs', locals: { items: [link_to('Imports', imports_path), link_to(@import.id, import_path(@import)), 'Pair columns'] } %>
+<h1>Pair Columns</h1>
+<%= form_for @import, data: { turbo: false } do |f| %>
+  <%= hidden_field_tag :schedule_job, true %>
+  <div class="mt-4">
+    Please select the matching attribute for the columns obtained from the CSV
+  </div>
+  <div class="mt-2">
+    <%= render 'imports/columns', {
+      import: @import,
+      column_pairings: @column_pairings,
+      headers: @csv_headers,
+      form: f,
+      sortable: true
+    } %>
+  </div>
+  <div class="mt-2">
+    <%= f.submit 'Continue', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', import_path(@import), class: 'btn btn-link' %>
+  </div>
+<% end %>

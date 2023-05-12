@@ -4,36 +4,38 @@
     <i class="fa-solid fa-upload"></i> Import contacts
   <% end %>
 </div>
-<div class="table">
-  <table class='table table-striped'>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Date of Birth</th>
-        <th>Last 4</th>
-        <th>Email</th>
-        <th>Phone number</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @contacts.empty? %>
-        <tr>
-          <td colspan="7" class="text-muted text-center">No contacts found</td>
-        </tr>
-      <% else %>
-        <%= render @contacts %>
-      <% end %>
-    </tbody>
-  </table>
+<div>
+  <ul class="clean-list">
+    <li class="border-bottom">
+      <div class="headers row mt-4">
+        <span class="col-1 fw-bold">
+          ID
+        </span>
+        <span class="col-2 fw-bold">
+          Name
+        </span>
+        <span class="col-1 fw-bold">
+          Address
+        </span>
+        <span class="col-1 fw-bold">
+          Birthdate
+        </span>
+        <span class="col-1 fw-bold">
+          Last 4
+        </span>
+        <span class="col-2 fw-bold">
+          Email
+        </span>
+        <span class="col-2 fw-bold">
+          Phone
+        </span>
+        <span class="col-1 fw-bold">
+          Actions
+        </span>
+      </div>
+    </li>
+    <%= render @contacts %>
+  </ul>
 </div>
-<% if @contacts.total_count > 0 %>
-  <div class="mb-2 row">
-    <div class="col text-center text-muted">
-      Total contacts: <%= @contacts.total_count %>
-    </div>
-  </div>
-<% end %>
+<%= render partial: 'counter', locals: { count: @contacts.total_count } %>
 <%= paginate @contacts %>

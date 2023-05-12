@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "#{dom_id(import)}_columns" do %>
+  <%= form_for import do |f| %>
+    <%= hidden_field_tag :schedule_job, true %>
+    <%= render 'imports/columns', {
+      import: import,
+      column_pairings: column_pairings,
+      headers: headers,
+      form: f,
+      sortable: true
+    } %>
+  <% end %>
+<% end %>

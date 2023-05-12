@@ -1,0 +1,4 @@
+<%= turbo_stream.remove "#{dom_id(@contact)}_container" %>
+<%= turbo_stream.replace "contacts_counter" do %>
+  <%= render partial: 'contacts/counter', locals: { count: @contacts.total_count } %>
+<% end %>

@@ -1,0 +1,20 @@
+<div class="table">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th>Error description</th>
+        <th>Contact Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if import.log['logs'].empty? %>
+        <tr>
+          <td colspan="7" class="text-muted text-center">No logs found</td>
+        </tr>
+      <% else %>
+        <%= render partial: 'imports/log', collection: import.log['logs'] %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

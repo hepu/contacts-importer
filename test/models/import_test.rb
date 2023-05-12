@@ -3,7 +3,6 @@
 # Table name: imports
 #
 #  id             :bigint           not null, primary key
-#  columns_pair   :jsonb
 #  current_status :string
 #  log            :jsonb
 #  created_at     :datetime         not null

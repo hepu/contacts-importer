@@ -1,0 +1,17 @@
+<%= form_with(model: import, id: "#{dom_id(import)}_form") do |f| %>
+  <div class="row mt-3">
+    <div class="col-12 d-flex align-items-center">
+      <%= f.label(:file, class: 'form-label') { 'CSV File' } %>
+    </div>
+    <div class="col-4">
+      <%= f.file_field :file, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row my-4">
+    <div class="col-md-12">
+      <%= f.submit 'Import', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', imports_path, class: 'btn btn-link' %>
+    </div>
+  </div>
+<% end %>

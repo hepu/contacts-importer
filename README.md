@@ -57,3 +57,4 @@ Or:
 - [example_happy_path.csv](https://github.com/hepu/contacts-importer/blob/main/example_happy_path.csv): Case when all contacts are imported successfully (if it's the first time)
 - [example_weird_headers.csv](https://github.com/hepu/contacts-importer/blob/main/example_weird_headers.csv): Case when CSV has weird headers to pair to
 - [example_wrong_fields.csv](https://github.com/hepu/contacts-importer/blob/main/example_wrong_fields.csv): Case when the fields entered in the CSVs have format issues
+- [example_extra_headers.csv](https://github.com/hepu/contacts-importer/blob/main/example_extra_headers.csv): Case when the there are more headers than expected

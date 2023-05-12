@@ -1,0 +1,23 @@
+<%= turbo_stream.replace "#{dom_id(@import)}_columns" do %>
+  <%= form_with model: @import, id: "#{dom_id(@import)}_columns_form" do |f| %>
+    <%= hidden_field_tag :autoupdate_form, @autoupdate_form %>
+    <%= render 'columns', {
+      import: @import,
+      column_pairings: @column_pairings,
+      headers: @csv_headers,
+      onChange: @autoupdate_form ? 'this.form.requestSubmit()' : nil,
+      form: f,
+      sortable: true
+    } %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "#{dom_id(@import)}_created_at" do %>
+  <%= form_with model: @import, id: "#{dom_id(@import)}_created_at_form" do |f| %>
+    <%= render 'created_at', import: @import, form: f %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.append "modal_messages" do %>
+  <%= render 'imports/pair_columns/messages', import: @import, messages: flash %>
+<% end %>

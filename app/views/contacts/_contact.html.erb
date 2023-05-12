@@ -1,14 +1,32 @@
-<tr>
-  <td><%= contact.id %></td>
-  <td><%= contact.name %></td>
-  <td><%= contact.address %></td>
-  <td><%= contact.birthdate %></td>
-  <td><%= contact.last_4 %></td>
-  <td><%= contact.email %></td>
-  <td><%= contact.phone %></td>
-  <td>
-    <%= button_to contact, class: 'btn btn-sm btn-danger', method: :delete, form: { data: { turbo: false, confirm: 'Are you sure?' } } do %>
-      Delete
-    <% end %>
-  </td>
-</tr>
+<li id="<%= "#{dom_id(contact)}_container" %>" class="border-bottom">
+  <%= turbo_frame_tag dom_id(contact) do %>
+    <div class="row">
+      <span class="col-1 text-wrap d-flex align-items-center">
+        <%= contact.id %>
+      </span>
+      <span class="col-2 text-wrap d-flex align-items-center">
+        <%= contact.name %>
+      </span>
+      <span class="col-1 text-wrap d-flex align-items-center">
+        <%= contact.address %>
+      </span>
+      <span class="col-1 text-wrap d-flex align-items-center">
+        <%= contact.birthdate %>
+      </span>
+      <span class="col-1 text-wrap d-flex align-items-center">
+        <%= contact.last_4 %>
+      </span>
+      <span class="col-2 text-wrap d-flex align-items-center">
+        <%= contact.email %>
+      </span>
+      <span class="col-2 text-wrap d-flex align-items-center">
+        <%= contact.phone %>
+      </span>
+      <span class="col-1 d-flex align-items-center">
+        <%= button_to contact_path(contact), class: 'btn btn-sm btn-danger', method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } } do %>
+          Delete
+        <% end %>
+      </span>
+    </div>
+  <% end %>
+</li>
