@@ -31,7 +31,7 @@
             data-attributes-dragging-animation-value="150"
             data-attributes-dragging-resource-name-value="column_pairing"
             data-attributes-dragging-handle-value=".handle"
-            data-attributes-dragging-autoupdate-value="<%= !!defined?(onChange) %>"
+            data-attributes-dragging-autoupdate-value="<%= (defined?(onChange) && onChange) || false %>"
           <% end %>
         >
           <% headers.each_with_index do |header, index| %>

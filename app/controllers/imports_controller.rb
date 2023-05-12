@@ -33,6 +33,7 @@ class ImportsController < ApplicationController
       format.turbo_stream do
         load_column_pairings
         load_csv_headers
+        @autoupdate_form = params[:autoupdate_form] == 'true' ? true : false
       end
       format.html do
         if params[:schedule_job].present?

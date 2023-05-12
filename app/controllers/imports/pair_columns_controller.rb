@@ -6,6 +6,13 @@ class Imports::PairColumnsController < ApplicationController
     load_csv_headers
   end
 
+  def edit
+    load_column_pairings
+    load_csv_headers
+
+    render layout: params[:layout].present?
+  end
+
   private
 
   def update_params

@@ -7,4 +7,20 @@
     <% end %>
   </td>
   <td><%= link_to import.created_at.strftime('%Y/%m/%d'), import_path(import) %></td>
+  <td>
+    <% if import.failed? %>
+      <%= link_to(
+        edit_import_pair_columns_path(import),
+        class: 'btn btn-primary',
+        data: {
+          turbo_frame: 'pair_columns_modal_body',
+          action: 'click->modal#show',
+          controller: 'modal',
+          modal_modal_id_value: '#importPairColumnsModal'
+        }
+      ) do %>
+        <i class="fa-solid fa-code-compare"></i> Pair Columns
+      <% end %>
+    <% end %>
+  </td>
 </tr>

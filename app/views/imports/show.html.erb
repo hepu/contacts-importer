@@ -54,6 +54,7 @@
   <div class="col-12 col-md-8">
     <%= turbo_frame_tag "#{dom_id(@import)}_columns" do %>
       <%= form_with model: @import, id: "#{dom_id(@import)}_columns_form" do |f| %>
+        <%= hidden_field_tag :autoupdate_form, true %>
         <%=
           render 'columns', {
             import: @import,

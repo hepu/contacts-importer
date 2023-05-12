@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :contacts, only: %i[index show destroy]
   resources :imports do
     scope module: :imports do
-      resource :pair_columns, only: :show
+      resource :pair_columns, only: %i[show edit]
       resource :schedules, only: :create
       resource :clear_logs, only: :destroy
     end
