@@ -1,12 +1,14 @@
-<%= turbo_frame_tag 'pair_columns_modal' do %>
-  <%= render 'shared/modal', id: "importPairColumnsModal", title: "Pair Columns" do %>
-    <% content_for :body do %>
-      <%= turbo_frame_tag 'pair_columns_modal_body' do %>
-        <%= render('imports/pair_columns/form', import: @import, column_pairings: @column_pairings, headers: @csv_headers) if @import.present? %>
-      <% end %>
+<%= render 'shared/modal', id: "importPairColumnsModal", title: "Pair Columns" do %>
+  <% content_for :body do %>
+    <div id="spinner"></div>
+    <%= turbo_frame_tag "modal_messages" do %>
+      <%= render('imports/pair_columns/messages', import: @import, messages: flash) if @import.present? %>
     <% end %>
-    <% content_for :footer do %>
-      <button type="submit" class="btn btn-primary">Save changes</button>
+    <%= turbo_frame_tag 'pair_columns_modal_body' do %>
+      <%= render('imports/pair_columns/form', import: @import, column_pairings: @column_pairings, headers: @csv_headers) if @import.present? %>
     <% end %>
+  <% end %>
+  <% content_for :footer do %>
+    <button type="submit" class="btn btn-primary">Save changes</button>
   <% end %>
 <% end %>

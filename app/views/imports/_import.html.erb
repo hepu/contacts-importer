@@ -21,6 +21,9 @@
       ) do %>
         <i class="fa-solid fa-code-compare"></i> Pair Columns
       <% end %>
+      <%= link_to import_schedules_path(import), class: 'btn btn-warning mx-2', method: :post, remote: true do %>
+        <i class="fa-solid fa-arrows-rotate"></i> Re-Import
+      <% end %>
     <% end %>
   </td>
 </tr>

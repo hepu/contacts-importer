@@ -17,3 +17,7 @@
     <%= render 'created_at', import: @import, form: f %>
   <% end %>
 <% end %>
+
+<%= turbo_stream.append "modal_messages" do %>
+  <%= render 'imports/pair_columns/messages', import: @import, messages: flash %>
+<% end %>

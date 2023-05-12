@@ -2,8 +2,8 @@
 <%= render partial: 'shared/breadcrumbs', locals: { items: [link_to('Imports', imports_path), @import.id] } %>
 <h1>Import</h1>
 <div class="d-flex justify-content-end mt-3">
-  <%= link_to import_schedules_path(@import), class: 'btn btn-primary mx-2', method: :post do %>
-    Re-Import
+  <%= link_to import_schedules_path(@import), class: 'btn btn-warning mx-2', method: :post do %>
+    <i class="fa-solid fa-arrows-rotate"></i> Re-Import
   <% end %>
   <%= button_to @import, class: 'btn btn-danger', method: :delete, form: { data: { turbo: false, confirm: 'Are you sure?' } } do %>
     Delete

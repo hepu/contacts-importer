@@ -15,6 +15,8 @@ export default class extends Controller {
     if (submitBtn && !submitBtn.attributes['data-modal-submit']) {
       submitBtn.setAttribute('data-modal-submit', true)
       submitBtn.addEventListener('click', this.submitForm.bind(this))
+
+      document.addEventListener('turbo:frame-load', this.onFrameLoad.bind(this))
     }
     this.element.addEventListener('turbo:click', this.onTurboClick.bind(this))
   }
@@ -27,18 +29,27 @@ export default class extends Controller {
     if (submitBtn && submitBtn.attributes['data-modal-submit']) {
       submitBtn.setAttribute('data-modal-submit', false)
       submitBtn.removeEventListener('click', this.submitForm.bind(this))
+
+      document.removeEventListener('turbo:frame-load', this.onFrameLoad)
     }
     this.element.removeEventListener('turbo:click', this.onTurboClick)
   }
 
   onTurboClick() {
-    this.modal._element.querySelector('.modal-body turbo-frame').innerHTML = `
+    this.modal._element.querySelector('.modal-body #spinner').innerHTML = `
       <div class="text-center">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
     `
+    this.modal._element.querySelectorAll('.modal-body turbo-frame').forEach((frame) => {
+      frame.innerHTML = ''
+    })
+  }
+
+  onFrameLoad() {
+    this.modal._element.querySelector('#spinner').innerHTML = ''
   }
 
   show() {

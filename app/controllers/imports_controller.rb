@@ -34,6 +34,7 @@ class ImportsController < ApplicationController
         load_column_pairings
         load_csv_headers
         @autoupdate_form = params[:autoupdate_form] == 'true' ? true : false
+        flash.now[:success] = 'Columns paired successfully!'
       end
       format.html do
         if params[:schedule_job].present?

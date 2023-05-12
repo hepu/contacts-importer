@@ -1,3 +1,6 @@
+<%= turbo_frame_tag "modal_messages" do %>
+  <%= render 'imports/pair_columns/messages', import: @import, messages: @messages %>
+<% end %>
 <%= turbo_frame_tag 'pair_columns_modal_body' do %>
   <%= render 'form', import: @import, column_pairings: @column_pairings, headers: @csv_headers %>
 <% end %>
