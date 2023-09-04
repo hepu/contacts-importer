@@ -1,7 +1,9 @@
 import { Application } from "@hotwired/stimulus"
 import Rails from '@rails/ujs'
+import Sortable from 'stimulus-sortable'
 
 const application = Application.start()
+application.register('sortable', Sortable)
 
 Rails.start()
 

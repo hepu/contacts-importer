@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_06_013625) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_04_142205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_013625) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "column_pairings", force: :cascade do |t|
+    t.string "local_column"
+    t.string "csv_column"
+    t.integer "import_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id"], name: "index_column_pairings_on_import_id"
+    t.index ["local_column"], name: "index_column_pairings_on_local_column"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "import_id"
@@ -65,7 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_013625) do
     t.string "current_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "columns_pair"
     t.jsonb "log", default: {"logs"=>[]}
     t.index ["current_status"], name: "index_imports_on_current_status"
     t.index ["user_id"], name: "index_imports_on_user_id"

@@ -14,7 +14,10 @@ class ImportContactsService
     success_contacts = []
     failed_contacts = []
     @import.log['logs'] ||= []
-    @column_pairing = @import.columns_pair
+    @column_pairings = {}
+    @import.column_pairings.each do |cp|
+      @column_pairings[cp.local_column] = cp.csv_column
+    end
     
     csv.each_with_index do |row, index|
       new_contact = build_contact(row)
@@ -35,10 +38,14 @@ class ImportContactsService
       end
     end
     
+    @import.save!
+    @import.notify_logs_change
     if failed_contacts.any? && success_contacts.empty?
-      @import.fail! if @import.may_fail?
+      Rails.logger.info("[ImportContactsJob] Import failed!")
+      @import.fail!
     else
-      @import.finish! if @import.may_finish?
+      Rails.logger.info("[ImportContactsJob] Import finished!")
+      @import.finish!
     end
   end
   
@@ -49,18 +56,18 @@ class ImportContactsService
   end
   
   def build_contact(row)
-    cc_number = row[@column_pairing['credit_card_number']]
+    cc_number = row[@column_pairings['credit_card_number']]
     cc = ActiveMerchant::Billing::CreditCard.new(number: cc_number)
     
     Contact.new(
-      address: row[@column_pairing['address']],
-      birthdate: row[@column_pairing['birthdate']],
+      address: row[@column_pairings['address']],
+      birthdate: row[@column_pairings['birthdate']],
       credit_card_number: cc_number,
       credit_card_network: cc.brand,
       last_4: cc.last_digits,
-      email: row[@column_pairing['email']],
-      name: row[@column_pairing['name']],
-      phone: row[@column_pairing['phone']],
+      email: row[@column_pairings['email']],
+      name: row[@column_pairings['name']],
+      phone: row[@column_pairings['phone']],
       user_id: @import.user_id,
       import_id: @import.id
     )

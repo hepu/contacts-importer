@@ -1,0 +1,57 @@
+<ul class="clean-list">
+  <li class="border-bottom">
+    <div class="headers row mt-4">
+      <span class="col-6 fw-bold">
+        Attribute
+      </span>
+      <span class="col-6 fw-bold">
+        CSV Column
+      </span>
+    </div>
+  </li>
+  <li>
+    <div class="row">
+      <div class="col-6">
+        <ul class="clean-list striped-rows">
+          <% column_pairings.each_with_index do |column_pair, index| %>
+            <li class="text-muted">
+              <%= column_pair.local_column %>
+              <%= form.fields_for :column_pairings, column_pair do |ff| %>
+                <%= ff.hidden_field :csv_column, value: column_pair.csv_column.presence || headers[index], data: {value: true}, onchange: defined?(onChange) && onChange %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul
+          class="clean-list striped-rows"
+          <% if defined?(sortable) %>
+            data-controller="attributes-dragging"
+            data-attributes-dragging-animation-value="150"
+            data-attributes-dragging-resource-name-value="column_pairing"
+            data-attributes-dragging-handle-value=".handle"
+            data-attributes-dragging-autoupdate-value="<%= (defined?(onChange) && onChange) || false %>"
+          <% end %>
+        >
+          <% headers.each_with_index do |header, index| %>
+            <li
+              <% if defined?(sortable) %>
+                class="sortable-row"
+              <% end %>
+            >
+              <div class="d-flex align-items-center">
+                <% if defined?(sortable) %>
+                  <span class="handle mx-2">
+                    <i class="fas fa-grip-vertical"></i>
+                  </span>
+                <% end %>
+                <span class="value"><%= header %></span>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>
